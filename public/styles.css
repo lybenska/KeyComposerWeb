@@ -840,10 +840,10 @@ p { margin: 0; text-wrap: pretty; }
 .setapp-shot-card {
   position: absolute;
   right: 5%; bottom: 6%;
-  width: 46%;
+  width: 54%;
   height: auto;
   border-radius: 14px;
-  background: var(--white);
+  background: #1C1C1E;
   box-shadow: 0 30px 60px -24px rgba(40, 10, 60, .6), 0 0 0 1px rgba(255, 255, 255, .7);
 }
 .setapp-foot { margin-top: 24px; font-size: 15px; color: var(--gray-500); }
