@@ -19,9 +19,10 @@ npm run preview   # serves ./dist
 
 ## Review builds
 
-Every push to `main` deploys to GitHub Pages via `.github/workflows/pages.yml`. Because the Pages site sits under a
-sub-path, the workflow runs `scripts/relativize.mjs`, which rewrites the build's root-relative URLs to relative ones.
-The source itself keeps root-relative paths for the production domain.
+Every push to `main` deploys to GitHub Pages via `.github/workflows/pages.yml`. The workflow runs
+`scripts/review-build.mjs` on the build output: it rewrites root-relative URLs to relative ones (the Pages site sits
+under a sub-path) and marks the site `noindex` with a `robots.txt` that disallows crawling, so the review build never
+appears in search engines. The source keeps root-relative paths and stays indexable for the production domain.
 
 ## Ad landing helpers
 
