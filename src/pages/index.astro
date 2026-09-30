@@ -1,0 +1,507 @@
+---
+// KeyComposer — landing page.
+// Product rules: no pricing, no trial, one CTA ("Try Free") on the first screen,
+// short copy, features collapsed by default with details on demand.
+// No testimonials until we have real, attributable ones.
+import { TRY_URL, SITE_URL } from '../consts';
+import { icons, plus, arrow } from '../icons';
+
+const title = 'KeyComposer: AI Presentation Maker for Mac | MacPaw';
+const description = 'Type a prompt or drop in a file and get a designed, editable slide deck in minutes. Export to Keynote, PowerPoint, or PDF. Free to try on Setapp.';
+const ogTitle = 'KeyComposer — Type a prompt. Ship a deck.';
+const ogImage = `${SITE_URL}/assets/og/landing.png`;
+
+// Hero copy variants for message-matched ad groups: open the page with ?v=files, ?v=pitch or ?v=keynote.
+// The default stays for organic traffic; main.js swaps the three strings in place.
+const heroVariants = {
+  files:   { l1: 'Drop in a file.', l2: 'Get a deck.', sub: 'Turn a PDF, Word, Excel, or PowerPoint file into a designed, editable slide deck in minutes.' },
+  pitch:   { l1: 'Your pitch deck,', l2: 'in one sentence.', sub: 'Describe the company. Get a designed, editable investor deck you can rehearse with today.' },
+  keynote: { l1: 'AI slides,', l2: 'straight into Keynote.', sub: 'Describe your idea and export a designed, editable deck to Keynote or PowerPoint in minutes.' },
+};
+
+const heroPoints = ['Keynote, PowerPoint, and PDF export', 'Built from your own files', 'Any language, any audience'];
+
+const steps = [
+  { title: 'Describe it or drop a file', text: 'Start from a sentence, a starter, or your PDF, Word, PowerPoint, or Excel file.', src: '/assets/shots/starters-dark.webp', alt: 'Composer with starter decks and a prompt field' },
+  { title: 'Pick a look and a model', text: 'Let AI design the theme, pick a preset, or import your brand template.', src: '/assets/shots/styles-dark.webp', alt: 'Style gallery with Auto and built-in presets' },
+  { title: 'Edit, then export', text: 'Click to change anything, or ask in plain words. Export when it’s right.', src: '/assets/shots/editor-dark.webp', alt: 'Deck editor with slide outline, canvas, and inspector' },
+];
+
+// Every figure here is sourced; re-check before changing.
+// 800M+  Openverse alone indexes 800M+ openly licensed images and audio (openverse.org/about);
+//        Pexels and Pixabay come on top.
+// 100+   Settings › AI listed 118 available models on 2026-09-29. That count spans all modalities;
+//        the deck picker hides image/audio endpoints, so it is stated as 100+, not 118.
+// 20+    DocumentParserRegistry registers 20 UTTypes: 11 text (txt, md, csv, tsv, json, xml, yaml,
+//        source code…), pdf, docx, pptx, 2 spreadsheet, 4 image — and the generic image/spreadsheet
+//        types cover more extensions than that.
+// 2 min  cost-estimate-matrix-results-2026-09-05.csv: 10-slide decks took 70–150 s without/with
+//        stock images; 5 slides took 85 s. The default brief is 8 slides.
+const stats = [
+  { n: 800, suffix: 'M+', label: 'licensed images and media to draw from' },
+  { n: 100, suffix: '+', label: 'AI models, from OpenAI, Claude, Google, and more' },
+  { n: 20, suffix: '+', label: 'file types it reads, from PDF to Excel' },
+  { n: 2, suffix: ' min', label: 'from prompt to a finished deck, typically' },
+];
+
+const features = [
+  { icon: 'brief', title: 'Brief in seconds', line: 'Set tone, audience, and length, or let AI infer them.',
+    more: ['Any language and audience; pick the slide count or let AI decide.', 'Slides appear in a live preview as they’re built.', 'A final pass checks every slide and fixes layout issues.'] },
+  { icon: 'files', title: 'Built from your files', line: 'Turn PDFs, docs, and spreadsheets into slides.',
+    more: ['PDF, Word, PowerPoint, Excel, text, and images.', 'Text in images is read on-device.', 'Review the outline and its sources before any slide is written.'] },
+  { icon: 'think', title: 'Deep Think', line: 'Researches the topic before it writes.',
+    more: ['Optional web lookup for up-to-date facts.', 'Best for reports, briefings, and data-heavy talks.'] },
+  { icon: 'style', title: 'Your look, or AI’s', line: 'AI-designed themes, presets, or your brand template.',
+    more: ['Presets: Clean Minimal, Corporate, Bold Contrast, Editorial, Playful.', 'Import an HTML template. Palette, fonts, and layout carry over.', 'Save any deck’s style as a preset.'] },
+  { icon: 'edit', title: 'Click or ask to edit', line: 'Change anything by hand or in plain words.',
+    more: ['Inspector for text, colors, borders, and backgrounds.', 'Aim a request at one element, a slide, or the whole deck.', 'Every change is a version you can undo or revert.'] },
+  { icon: 'image', title: 'Images that fit', line: 'Licensed stock, AI-generated, or your own.',
+    more: ['Stock from Pexels, Pixabay, and Openverse, each credited with a link.', 'Generate images that match the deck’s style.', 'Drop an image onto a slide to place it exactly.'] },
+  { icon: 'export', title: 'Export anywhere', line: 'Keynote, PowerPoint, PDF, or HTML.',
+    more: ['Keynote export appears when Keynote is installed.', 'Send straight to another app from the Share menu.'] },
+  { icon: 'model', title: 'Pick your model', line: 'Auto, or choose OpenAI, Claude, Google, Grok, or Llama.',
+    more: ['Auto picks the right model for each deck.', 'No API keys to paste. AI runs through Setapp.'] },
+];
+
+const compare = [
+  { row: 'First draft', old: 'Hours', neu: 'Minutes' },
+  { row: 'Layout and design', old: 'By hand, slide by slide', neu: 'Designed, then checked for layout issues' },
+  { row: 'Images', old: 'Search and license yourself', neu: 'Sourced and credited, or generated' },
+  { row: 'Your source docs', old: 'Copy and paste', neu: 'Read directly' },
+  { row: 'Formats', old: 'Rebuild for each app', neu: 'Keynote, PowerPoint, PDF, HTML' },
+];
+
+const creditPoints = [
+  { title: 'One balance for Setapp', text: 'Uses the Setapp AI credits you already have, shared across your Setapp apps.' },
+  { title: 'Cost shown up front', text: 'An estimate appears under your prompt before you generate.' },
+  { title: 'Pay for what you use', text: 'Deep Think, files, and AI images cost more. Templates and small edits cost less.' },
+  { title: 'A heads-up, not a surprise', text: 'If your balance may not cover a deck, KeyComposer says so before you generate and links to a top-up.' },
+];
+
+// The eight slides KeyComposer generated for the starter prompt "Seed round pitch for an AI notes
+// app" (Auto style, licensed stock photos). Captured from the editor on 2026-09-29, not mockups.
+const deckSlides = [
+  'Title slide: Notd — your second brain, on autopilot',
+  'The problem: notes get written, then lost',
+  'Why it matters: lost notes are lost hours',
+  'The product: Notd captures and recalls for you',
+  'Traction: early signal is strong',
+  'The market: a large, growing category',
+  'How we make money: freemium to Pro subscription',
+  'The ask: raising $2.5M seed',
+];
+
+// Two ticker rows of example prompts. Each is something the app can actually do today:
+// files in, a language or style named, a slide count.
+const promptRows = [
+  [
+    ['Business', 'Q3 board review from sales.xlsx'],
+    ['Teaching', 'Photosynthesis for 7th graders, 10 slides'],
+    ['Personal', 'Maid of honor speech for my sister'],
+    ['Product', 'Launch deck for our calendar app'],
+    ['Research', 'Turn my thesis.pdf into 12 slides'],
+    ['Everyday', '10-day Japan itinerary for a family of four'],
+    ['Team', 'Offsite agenda for a team of 20'],
+    ['Sales', 'Proposal for a website redesign, in Spanish'],
+  ],
+  [
+    ['Startup', 'Seed round pitch for an AI notes app'],
+    ['Marketing', '2027 content strategy, bold style'],
+    ['HR', 'Onboarding deck for new engineers'],
+    ['Education', 'Lecture 4: why we sleep'],
+    ['Nonprofit', 'Annual impact report from report.docx'],
+    ['Finance', 'Budget review from budget.xlsx, data dense'],
+    ['Community', 'Book club: The Overstory'],
+    ['Fun', 'Why cats rule the internet, playful'],
+  ],
+];
+
+// Prompts typed into the closing banner's pill, one after another.
+const closingPrompts = [
+  'Seed round pitch for an AI notes app',
+  'Lecture 4: why we sleep',
+  'Q3 board review from sales.xlsx',
+  'Maid of honor speech for my sister',
+  '10-day Japan itinerary for a family of four',
+];
+
+const faqs = [
+  { q: 'What is KeyComposer?', a: 'An AI presentation maker for Mac. Type a prompt or drop in a file, and it generates a designed, editable slide deck you can export to Keynote, PowerPoint, or PDF.' },
+  { q: 'Do I need an account or an API key?', a: 'No API key. KeyComposer runs on Setapp AI, so it works with your Setapp account.' },
+  { q: 'Can I use my own documents?', a: 'Yes. Drop in PDF, Word, PowerPoint, Excel, text, or image files, and the deck is built from your material.' },
+  { q: 'Can I edit the deck after it’s generated?', a: 'Yes. Click any element to change it, or describe the change and KeyComposer rewrites that element, slide, or deck.' },
+  { q: 'Which formats can I export?', a: 'PDF, PowerPoint (PPTX), Keynote, and a self-contained HTML file.' },
+  { q: 'Where are my decks stored?', a: 'Locally on your Mac. Exporting creates a separate file and leaves the original untouched.' },
+  { q: 'What do I need to run it?', a: 'A Mac with Apple silicon running macOS 15 Sequoia or later.' },
+];
+
+const check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const bolt = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>';
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+
+const appJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'KeyComposer',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'macOS 15',
+  description,
+  url: `${SITE_URL}/`,
+  author: { '@type': 'Organization', name: 'MacPaw', url: 'https://macpaw.com' },
+};
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="icon" type="image/png" href="/assets/icon-32.png" />
+<link rel="apple-touch-icon" href="/assets/icon.png" />
+<link rel="canonical" href={`${SITE_URL}/`} />
+<meta property="og:site_name" content="KeyComposer" />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={`${SITE_URL}/`} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="KeyComposer editor with a generated pitch deck" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@macpaw" />
+<meta name="twitter:title" content={ogTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<script type="application/ld+json" set:html={JSON.stringify(appJsonLd)} />
+<script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+<!-- Fixel is self-hosted (public/fonts, SIL OFL 1.1). Preload the two faces the first screen paints with. -->
+<link rel="preload" href="/fonts/FixelDisplay-Medium.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/FixelText-Regular.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<!-- ─────────────────────────────  NAV  ──── -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="KeyComposer home">
+      <img src="/assets/icon.png" width="28" height="28" alt="" />
+      KeyComposer
+    </a>
+    <!-- Inline on desktop; a drop-down panel behind the burger on tablet and phone. -->
+    <nav class="nav-links" id="nav-links" aria-label="Page sections">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#credits">Credits</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn nav-menu-cta" href={TRY_URL}>Try Free <Fragment set:html={arrow} /></a>
+    </nav>
+    <a class="btn btn-sm nav-cta" href={TRY_URL} tabindex="-1" aria-hidden="true">Try Free</a>
+    <button class="nav-burger" id="nav-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-backdrop" id="nav-backdrop"></div>
+</header>
+
+<main id="top" class="frame">
+
+<!-- ─────────────────────────────  HERO  ──── -->
+<section class="hero band">
+  <div class="hero-copy">
+    <span class="chip"><span class="chip-tag">New</span>AI presentation maker for Mac</span>
+    <h1><span class="grad" id="hero-l1">Type a prompt.</span><br /><span id="hero-l2">Ship a deck.</span></h1>
+    <p class="hero-sub" id="hero-sub">Describe your idea or drop in a file. Get a designed, editable slide deck in minutes.</p>
+    <a class="btn" id="hero-cta" href={TRY_URL}>Try Free <Fragment set:html={arrow} /></a>
+    <ul class="checks">
+      {heroPoints.map((p) => <li><span class="ck"><Fragment set:html={check} /></span>{p}</li>)}
+    </ul>
+  </div>
+
+  <!-- Live demo: typed prompt → streamed slides → editor. -->
+  <div class="stage" id="stage" aria-label="KeyComposer building a pitch deck from a prompt" role="img">
+    <div class="stage-glow"></div>
+
+    <div class="scene scene-compose is-active" data-scene="compose">
+      <div class="mini-chips"><span>Untitled deck</span><span>Parameters</span><span>Model: Auto</span><span>Deep Think</span></div>
+      <div class="composer">
+        <span class="bal"><Fragment set:html={bolt} />48,718</span>
+        <span class="field"><span id="typed"></span><span class="caret"></span></span>
+        <span class="send" id="send"><Fragment set:html={arrow} /></span>
+      </div>
+      <p class="est">≈ 170–310 credits for this presentation</p>
+    </div>
+
+    <div class="scene scene-stream" data-scene="stream">
+      <p class="status"><span class="spinner"></span>Designing your theme…</p>
+      <div class="slides">
+        {[1, 2, 3, 4, 5, 6].map((n) => (
+          <div class="sl"><img src={`/assets/slides/notd-${n}.webp`} alt="" width="1600" height="901" loading="eager" decoding="async" /></div>
+        ))}
+      </div>
+    </div>
+
+    <div class="scene scene-editor" data-scene="editor">
+      <img src="/assets/shots/editor-dark.webp" alt="" width="2000" height="1286" loading="eager" decoding="async" />
+    </div>
+
+    <span class="stage-badge" id="stage-badge"><span class="dot"></span><span id="stage-label">Describe</span></span>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  TRUST  ──── -->
+<div class="trust band">
+  <figure class="quote">
+    <blockquote>“I love it! Useful app, helps with your presentation in minutes.”</blockquote>
+    <figcaption>Anja ·<a href="https://setapp.com/apps/keycomposer/customer-reviews" target="_blank" rel="noopener">Setapp review</a></figcaption>
+  </figure>
+  <div class="trust-facts">
+    <span>Made by <strong>MacPaw</strong>, the team behind CleanMyMac and Setapp</span>
+    <span>Runs on <strong>Setapp AI</strong>. No API keys</span>
+  </div>
+</div>
+
+<!-- ─────────────────────────────  HOW IT WORKS  ──── -->
+<section class="section band" id="how">
+  <div class="how">
+    <!-- Sticky column the height of the viewport: heading + screenshot stay centred while the steps scroll. -->
+    <div class="how-media">
+      <div class="how-head reveal">
+        <h2><span class="grad">Idea to deck</span> in 3 steps</h2>
+        <p>No blank slides, no layout fiddling.</p>
+      </div>
+      <div class="how-frame" aria-hidden="true">
+        {steps.map((s, i) => (
+          <img class={`how-shot${i === 0 ? ' is-active' : ''}`} data-shot={i} src={s.src} alt="" width="2000" height="1286" loading="lazy" decoding="async" />
+        ))}
+      </div>
+    </div>
+    <ol class="how-steps">
+      {steps.map((s, i) => (
+        <li class={`how-step${i === 0 ? ' is-active' : ''}`} data-step={i}>
+          <span class="how-num">{i + 1}</span>
+          <div>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <img class="how-inline" src={s.src} alt={s.alt} width="2000" height="1286" loading="lazy" decoding="async" />
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  STATS  ──── -->
+<div class="stats band">
+  {stats.map((s) => (
+    <div class="stat reveal">
+      <span class="stat-n" data-count={s.n} data-suffix={s.suffix ?? ''}>{s.n}{s.suffix}</span>
+      <span class="stat-l">{s.label}</span>
+    </div>
+  ))}
+</div>
+
+<!-- ─────────────────────────────  FEATURES  ──── -->
+<section class="section band" id="features">
+  <div class="split-head reveal">
+    <h2>Everything a <span class="grad">deck needs</span></h2>
+    <p>Tap a card for details.</p>
+  </div>
+  <div class="feature-grid">
+    {features.map((f) => (
+      <details class="feature reveal">
+        <summary>
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[f.icon]} /></span>
+          <h3>{f.title}</h3>
+          <span class="plus"><Fragment set:html={plus} /></span>
+          <span class="line">{f.line}</span>
+        </summary>
+        <div class="more">
+          <ul>{f.more.map((m) => <li>{m}</li>)}</ul>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<!-- ─────────────────────────────  USE CASES · REAL OUTPUT  ──── -->
+<section class="section band" id="use-cases">
+  <div class="split-head reveal">
+    <h2>One sentence in.<br /><span class="grad">A finished deck out.</span></h2>
+    <p>Every slide below came from the prompt underneath: layout, copy, photos, and charts included.</p>
+  </div>
+
+  <div class="proof-prompt reveal">
+    <img src="/assets/icon.png" width="28" height="28" alt="" />
+    <div>
+      <span class="proof-label">Prompt</span>
+      <p class="proof-text">“Seed round pitch for an AI notes app”</p>
+      <ul class="proof-params"><li>8 slides</li><li>Auto style</li><li>Stock photos</li></ul>
+    </div>
+  </div>
+
+  <!-- The set is rendered twice so the CSS loop is seamless; the copy is hidden from AT. -->
+  <div class="reel" aria-label="The eight generated slides">
+    <div class="reel-track">
+      {[0, 1].map((copy) => (
+        <div class="reel-set" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {deckSlides.map((alt, i) => (
+            <button class="reel-item" type="button" data-index={i} tabindex={copy === 1 ? -1 : 0} aria-label={`Open slide ${i + 1}: ${alt}`}>
+              <img src={`/assets/slides/notd-${i + 1}.webp`} alt={alt} width="1600" height="901" loading="lazy" decoding="async" />
+              <span class="reel-num">{i + 1} / {deckSlides.length}</span>
+            </button>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+  <p class="reel-note">Generated by KeyComposer from the prompt above. Click any slide to see it up close.</p>
+
+  <div class="prompts reveal">
+    <p class="prompts-lead">Pitch decks are one prompt of many</p>
+    {promptRows.map((row, r) => (
+      <div class={`ticker${r === 1 ? ' reverse' : ''}`}>
+        <div class="ticker-track">
+          {[0, 1].map((copy) => (
+            <div class="ticker-set" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {row.map(([tag, text]) => <span class="pill"><b>{tag}</b>{text}</span>)}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ─────────────────────────────  COMPARISON  ──── -->
+<section class="section band compare-section">
+  <div class="compare-copy reveal">
+    <h2>Skip the <span class="grad">blank slide</span></h2>
+    <p>The hours go to your message, not to layout.</p>
+  </div>
+  <div class="compare reveal" role="table" aria-label="Making a deck by hand compared with KeyComposer">
+    <div class="c-row c-head" role="row">
+      <span role="columnheader"></span>
+      <span role="columnheader">By hand</span>
+      <span role="columnheader" class="c-us"><img src="/assets/icon.png" width="20" height="20" alt="" />KeyComposer</span>
+    </div>
+    {compare.map((c) => (
+      <div class="c-row" role="row">
+        <span role="rowheader">{c.row}</span>
+        <span role="cell" class="c-old">{c.old}</span>
+        <span role="cell" class="c-us"><span class="ck"><Fragment set:html={check} /></span>{c.neu}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- ─────────────────────────────  CREDITS  ──── -->
+<section class="section band" id="credits">
+  <div class="credits">
+    <div class="credits-copy">
+      <div class="reveal">
+        <h2>How <span class="grad">credits</span> work</h2>
+      </div>
+      <ul class="credit-points">
+        {creditPoints.map((c) => (
+          <li class="reveal"><h3>{c.title}</h3><p>{c.text}</p></li>
+        ))}
+      </ul>
+    </div>
+
+    <form class="calc reveal" id="calc" onsubmit="return false" aria-label="Credit estimate">
+      <p class="calc-title">What will my deck cost?</p>
+      <label class="calc-slider">
+        <span class="calc-row"><span>Slides</span><output id="calc-slides-out">8</output></span>
+        <input type="range" id="calc-slides" min="3" max="20" value="8" />
+      </label>
+      <div class="calc-toggles">
+        <label class="tg"><input type="checkbox" id="calc-deep" /><span class="tg-ui"></span>Deep Think</label>
+        <label class="tg"><input type="checkbox" id="calc-doc" /><span class="tg-ui"></span>Attach a document</label>
+        <label class="tg"><input type="checkbox" id="calc-img" /><span class="tg-ui"></span>AI-generated images</label>
+      </div>
+      <div class="calc-result">
+        <span class="calc-num"><Fragment set:html={bolt} /><output id="calc-out">≈ 170–310</output></span>
+        <span class="calc-unit">credits for this presentation</span>
+      </div>
+      <p class="calc-note">Illustrative. KeyComposer shows the exact estimate before you generate. Edits by request start at about 40 credits.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  FAQ  ──── -->
+<section class="section band" id="faq">
+  <div class="faq-wrap">
+    <div class="reveal">
+      <h2>Answers before you <span class="grad">press generate</span></h2>
+    </div>
+    <div class="faq-list reveal">
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}<span class="plus"><Fragment set:html={plus} /></span></summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  CLOSING CTA  ──── -->
+<section class="closing band">
+  <div class="closing-glow" aria-hidden="true"></div>
+  <!-- Real slides from the deck above, fanned out along the bottom edge. -->
+  <div class="closing-fan" aria-hidden="true">
+    {[6, 2, 5, 4, 8].map((n, i) => (
+      <img src={`/assets/slides/notd-${n}.webp`} alt="" width="1600" height="901" loading="lazy" decoding="async" style={`--r: ${(i - 2) * 11}deg; --d: ${i * -1.3}s; --z: ${i === 2 ? 5 : 4 - Math.abs(i - 2)};`} />
+    ))}
+  </div>
+  <div class="closing-inner reveal">
+    <div class="closing-prompt" aria-hidden="true">
+      <img src="/assets/icon.png" width="24" height="24" alt="" />
+      <span class="typed" id="closing-typed" data-prompts={JSON.stringify(closingPrompts)}>{closingPrompts[0]}</span><span class="caret"></span>
+      <span class="send"><Fragment set:html={arrow} /></span>
+    </div>
+    <h2>Your next deck is<br /><span class="grad">one sentence away</span></h2>
+    <a class="btn" href={TRY_URL}>Try Free <Fragment set:html={arrow} /></a>
+    <p class="closing-meta">No API keys <span>•</span> Any language <span>•</span> Keynote, PowerPoint, PDF</p>
+  </div>
+</section>
+
+</main>
+
+<dialog class="lightbox" id="lightbox" aria-label="Slide preview">
+  <img id="lb-img" src="/assets/slides/notd-1.webp" alt="" width="1600" height="901" />
+  <div class="lb-bar">
+    <span id="lb-cap">Slide 1 of 8</span>
+    <span class="lb-btns">
+      <button class="lb-btn lb-prev" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button class="lb-btn lb-next" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <button class="lb-btn lb-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </span>
+  </div>
+</dialog>
+
+<!-- ─────────────────────────────  FOOTER  ──── -->
+<footer>
+  <div class="footer-inner">
+    <a class="brand" href="#top"><img src="/assets/icon.png" width="22" height="22" alt="" />KeyComposer</a>
+    <span>© 2026 MacPaw Way Ltd.</span>
+    <nav class="footer-links" aria-label="Legal">
+      <a href="https://macpaw.com/legal/ai-apps-privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+      <a href="https://macpaw.com/legal/ai-apps-terms-of-service" target="_blank" rel="noopener">Terms of Service</a>
+    </nav>
+  </div>
+</footer>
+
+<script is:inline set:html={`window.heroVariants = ${JSON.stringify(heroVariants)};`} />
+<script is:inline src="/main.js"></script>
+</body>
+</html>
