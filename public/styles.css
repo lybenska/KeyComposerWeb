@@ -444,7 +444,7 @@ p { margin: 0; text-wrap: pretty; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(255, 0, 170, .15); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage-glow, .caret, .spinner, .stage-badge .dot { animation: none; }
+  .stage-glow, .caret, .closing-prompt .typed::after, .spinner, .stage-badge .dot { animation: none; }
   .scene, .sl { transition: none; }
 }
 
@@ -898,7 +898,16 @@ p { margin: 0; text-wrap: pretty; }
 }
 .closing-prompt img { width: 24px; height: 24px; border-radius: 6px; }
 .closing-prompt .typed { display: inline-block; min-width: min(58vw, 360px); max-width: min(58vw, 420px); text-align: left; white-space: nowrap; overflow: hidden; }
-.closing-prompt .caret { background: #FF6FD0; height: 1.1em; margin-left: 0; }
+/* The caret lives inside the typed span, so it hugs the last letter while the pill keeps its width. */
+.closing-prompt .typed::after {
+  content: '';
+  display: inline-block;
+  width: 2px; height: 1.1em;
+  margin-left: 2px;
+  vertical-align: -3px;
+  background: #FF6FD0;
+  animation: blink 1s steps(1) infinite;
+}
 .closing-prompt .send {
   width: 32px; height: 32px;
   display: grid; place-items: center;
