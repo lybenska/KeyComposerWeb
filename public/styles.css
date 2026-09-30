@@ -826,15 +826,26 @@ p { margin: 0; text-wrap: pretty; }
 .setapp-steps h3 { font-size: 19px; font-weight: 500; line-height: 1.25; margin-top: 4px; }
 .setapp-steps p { margin-top: 6px; font-size: 15px; color: var(--gray-500); }
 .setapp-shot {
+  position: relative;
   margin: 0;
-  padding: 6% 5%;
+  padding: 6% 12% 13% 5%;
   border-radius: var(--radius-xl);
   background:
     radial-gradient(70% 60% at 0% 100%, rgba(255, 150, 90, .45), transparent 70%),
     radial-gradient(60% 60% at 100% 0%, rgba(160, 140, 255, .55), transparent 70%),
     radial-gradient(80% 80% at 50% 50%, #F3D7F0, #EBDDF8);
 }
-.setapp-shot img { width: 100%; height: auto; }
+.setapp-shot-window { width: 100%; height: auto; }
+/* Setapp's post-sign-up screen for KeyComposer, floating over the window's bottom-right corner. */
+.setapp-shot-card {
+  position: absolute;
+  right: 5%; bottom: 6%;
+  width: 46%;
+  height: auto;
+  border-radius: 14px;
+  background: var(--white);
+  box-shadow: 0 30px 60px -24px rgba(40, 10, 60, .6), 0 0 0 1px rgba(255, 255, 255, .7);
+}
 .setapp-foot { margin-top: 24px; font-size: 15px; color: var(--gray-500); }
 .setapp-foot a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); }
 .setapp-foot a:hover { color: var(--pink); }
