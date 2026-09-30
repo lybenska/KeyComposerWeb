@@ -441,25 +441,28 @@ const appJsonLd = {
 </section>
 
 <!-- ─────────────────────────────  SETAPP  ──── -->
-<!-- "300+ Mac, iOS, and web apps" is Setapp's own homepage claim; the window shot is Setapp's official
-     app screenshot from setapp.com (MacPaw asset), saved as assets/shots/setapp-home.webp (2026-09-30). -->
+<!-- "300+ Mac, iOS, and web apps" is Setapp's own homepage claim (setapp.com, 2026-09-30).
+     Images: Setapp's sign-up page (snapshotted in an isolated WebKit view), Setapp's official app screenshot
+     from setapp.com, and KeyComposer's page inside the Setapp app captured on this Mac. -->
 <section class="section band setapp" id="setapp">
   <div class="split-head reveal">
     <h2>Try Free goes through <span class="grad">Setapp</span></h2>
     <p>Setapp is MacPaw’s app subscription: 300+ Mac, iOS, and web apps in one account, KeyComposer included. That account is the only one you need.</p>
   </div>
-  <div class="setapp-grid">
-    <ol class="setapp-steps">
-      <li class="reveal"><span class="setapp-num">1</span><div><h3>Create a Setapp account</h3><p>That’s where the Try Free button lands. It takes a minute.</p></div></li>
-      <li class="reveal"><span class="setapp-num">2</span><div><h3>Install Setapp on your Mac</h3><p>One small app that installs and updates everything else.</p></div></li>
-      <li class="reveal"><span class="setapp-num">3</span><div><h3>Open KeyComposer</h3><p>It’s in your Setapp library, with the AI credits already covered.</p></div></li>
-    </ol>
-    <!-- Official Setapp app screenshot, with KeyComposer’s own page inside the Setapp app (captured on this Mac, 2026-09-30) in front. -->
-    <figure class="setapp-shot reveal">
-      <img class="setapp-shot-window" src="/assets/shots/setapp-home.webp" alt="The Setapp app on a Mac, showing its library of apps" width="1600" height="973" loading="lazy" decoding="async" />
-      <img class="setapp-shot-card" src="/assets/shots/setapp-ready.webp" alt="KeyComposer’s page inside the Setapp app, with its Install button" width="1200" height="357" loading="lazy" decoding="async" />
-    </figure>
-  </div>
+  <ol class="setapp-steps">
+    <li class="setapp-step reveal">
+      <div class="setapp-pic"><img src="/assets/shots/setapp-signup.webp" alt="Setapp sign-up page for KeyComposer: continue with Google, Apple, or email" width="1400" height="875" loading="lazy" decoding="async" /></div>
+      <div class="setapp-body"><span class="setapp-num">1</span><h3>Create a Setapp account</h3><p>That’s where the Try Free button lands. It takes a minute.</p></div>
+    </li>
+    <li class="setapp-step reveal">
+      <div class="setapp-pic"><img src="/assets/shots/setapp-home.webp" alt="The Setapp app on a Mac, showing its library of apps" width="1600" height="973" loading="lazy" decoding="async" /></div>
+      <div class="setapp-body"><span class="setapp-num">2</span><h3>Install Setapp on your Mac</h3><p>One small app that installs and updates everything else.</p></div>
+    </li>
+    <li class="setapp-step reveal">
+      <div class="setapp-pic"><img src="/assets/shots/setapp-keycomposer.webp" alt="KeyComposer’s page inside the Setapp app, with its Install button" width="1400" height="875" loading="lazy" decoding="async" /></div>
+      <div class="setapp-body"><span class="setapp-num">3</span><h3>Open KeyComposer</h3><p>It’s in your Setapp library, with the AI credits already covered.</p></div>
+    </li>
+  </ol>
   <p class="setapp-foot reveal">Already on Setapp? Search for KeyComposer in the Setapp app, or open <a href={APP_PAGE_URL} target="_blank" rel="noopener">its Setapp page</a>. <a href="https://setapp.com" target="_blank" rel="noopener">More about Setapp</a>.</p>
 </section>
 

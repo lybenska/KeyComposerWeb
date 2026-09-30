@@ -802,50 +802,31 @@ p { margin: 0; text-wrap: pretty; }
 .calc-unit { display: block; margin-top: 6px; font-size: 15px; color: var(--gray-500); }
 .calc-note { margin-top: 16px; font-size: 13px; color: var(--gray-400); }
 
-/* ── Setapp explainer ────────────────────────────────────── */
-.setapp-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: center; }
-.setapp-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.setapp-steps li {
-  display: grid;
-  grid-template-columns: 32px 1fr;
-  gap: 16px;
-  padding: 20px 22px;
+/* ── Setapp explainer: three cards, one real screenshot each ─ */
+.setapp-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.setapp-step {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--paper);
+  overflow: hidden;
 }
+.setapp-pic { aspect-ratio: 16 / 10; border-bottom: 1px solid var(--line); background: var(--gray-100); overflow: hidden; }
+.setapp-pic img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+.setapp-body { padding: 20px 22px 24px; }
 .setapp-num {
   display: grid; place-items: center;
-  width: 32px; height: 32px;
+  width: 28px; height: 28px;
+  margin-bottom: 12px;
   border-radius: 50%;
   background: var(--ink);
   color: var(--white);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
 }
-.setapp-steps h3 { font-size: 19px; font-weight: 500; line-height: 1.25; margin-top: 4px; }
-.setapp-steps p { margin-top: 6px; font-size: 15px; color: var(--gray-500); }
-.setapp-shot {
-  position: relative;
-  margin: 0;
-  padding: 6% 12% 13% 5%;
-  border-radius: var(--radius-xl);
-  background:
-    radial-gradient(70% 60% at 0% 100%, rgba(255, 150, 90, .45), transparent 70%),
-    radial-gradient(60% 60% at 100% 0%, rgba(160, 140, 255, .55), transparent 70%),
-    radial-gradient(80% 80% at 50% 50%, #F3D7F0, #EBDDF8);
-}
-.setapp-shot-window { width: 100%; height: auto; }
-/* Setapp's post-sign-up screen for KeyComposer, floating over the window's bottom-right corner. */
-.setapp-shot-card {
-  position: absolute;
-  right: 5%; bottom: 6%;
-  width: 54%;
-  height: auto;
-  border-radius: 14px;
-  background: #1C1C1E;
-  box-shadow: 0 30px 60px -24px rgba(40, 10, 60, .6), 0 0 0 1px rgba(255, 255, 255, .7);
-}
+.setapp-step h3 { font-size: 19px; font-weight: 500; line-height: 1.25; }
+.setapp-step p { margin-top: 6px; font-size: 15px; color: var(--gray-500); }
 .setapp-foot { margin-top: 24px; font-size: 15px; color: var(--gray-500); }
 .setapp-foot a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); }
 .setapp-foot a:hover { color: var(--pink); }
@@ -1063,8 +1044,7 @@ footer { padding: 32px 0 48px; font-size: 14px; color: var(--gray-500); }
   .hero-sub { margin-left: auto; margin-right: auto; }
   .checks { justify-items: start; }
   .feature-grid { grid-template-columns: repeat(2, 1fr); }
-  .setapp-grid { grid-template-columns: 1fr; gap: 24px; }
-  .setapp-shot { order: -1; }
+  .setapp-steps { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
   .setapp-foot { text-align: center; }
   .compare-section, .credits, .faq-wrap { grid-template-columns: 1fr; gap: 32px; }
   .how { grid-template-columns: 1fr; gap: 28px; }
