@@ -3,7 +3,7 @@
 // Product rules: no pricing, no trial, one CTA ("Try Free") on the first screen,
 // short copy, features collapsed by default with details on demand.
 // No testimonials until we have real, attributable ones.
-import { TRY_URL, SITE_URL } from '../consts';
+import { TRY_URL, APP_PAGE_URL, SITE_URL } from '../consts';
 import { icons, plus, arrow } from '../icons';
 
 const title = 'KeyComposer: AI Presentation Maker for Mac | MacPaw';
@@ -127,7 +127,8 @@ const closingPrompts = [
 
 const faqs = [
   { q: 'What is KeyComposer?', a: 'An AI presentation maker for Mac. Type a prompt or drop in a file, and it generates a designed, editable slide deck you can export to Keynote, PowerPoint, or PDF.' },
-  { q: 'Do I need an account or an API key?', a: 'No API key. KeyComposer runs on Setapp AI, so it works with your Setapp account.' },
+  { q: 'Why does Try Free open Setapp?', a: 'KeyComposer is distributed through Setapp, MacPaw’s app subscription. The button takes you straight to Setapp sign-up; once Setapp is on your Mac, KeyComposer is one click away.' },
+  { q: 'Do I need an account or an API key?', a: 'A Setapp account, no API key. Sign-up takes a minute, and the same account covers the AI credits KeyComposer runs on.' },
   { q: 'Can I use my own documents?', a: 'Yes. Drop in PDF, Word, PowerPoint, Excel, text, or image files, and the deck is built from your material.' },
   { q: 'Can I edit the deck after it’s generated?', a: 'Yes. Click any element to change it, or describe the change and KeyComposer rewrites that element, slide, or deck.' },
   { q: 'Which formats can I export?', a: 'PDF, PowerPoint (PPTX), Keynote, and a self-contained HTML file.' },
@@ -203,8 +204,9 @@ const appJsonLd = {
       <a href="#credits">Credits</a>
       <a href="#faq">FAQ</a>
       <a class="btn nav-menu-cta" href={TRY_URL}>Try Free <Fragment set:html={arrow} /></a>
+      <span class="nav-menu-note">Sign up with a Setapp account</span>
     </nav>
-    <a class="btn btn-sm nav-cta" href={TRY_URL} tabindex="-1" aria-hidden="true">Try Free</a>
+    <a class="btn btn-sm nav-cta" href={TRY_URL} tabindex="-1" aria-hidden="true" title="Sign up with a Setapp account">Try Free</a>
     <button class="nav-burger" id="nav-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span>
     </button>
@@ -221,6 +223,7 @@ const appJsonLd = {
     <h1><span class="grad" id="hero-l1">Type a prompt.</span><br /><span id="hero-l2">Ship a deck.</span></h1>
     <p class="hero-sub" id="hero-sub">Describe your idea or drop in a file. Get a designed, editable slide deck in minutes.</p>
     <a class="btn" id="hero-cta" href={TRY_URL}>Try Free <Fragment set:html={arrow} /></a>
+    <p class="cta-note">Sign up with a Setapp account, then install on your Mac. <a href="#setapp">What’s Setapp?</a></p>
     <ul class="checks">
       {heroPoints.map((p) => <li><span class="ck"><Fragment set:html={check} /></span>{p}</li>)}
     </ul>
@@ -437,6 +440,21 @@ const appJsonLd = {
   </div>
 </section>
 
+<!-- ─────────────────────────────  SETAPP  ──── -->
+<!-- "300+ Mac, iOS, and web apps" is Setapp's own homepage claim (setapp.com, 2026-09-30). -->
+<section class="section band setapp" id="setapp">
+  <div class="split-head reveal">
+    <h2>Try Free goes through <span class="grad">Setapp</span></h2>
+    <p>Setapp is MacPaw’s app subscription: 300+ Mac, iOS, and web apps in one account, KeyComposer included. That account is the only one you need.</p>
+  </div>
+  <ol class="setapp-steps">
+    <li class="reveal"><span class="setapp-num">1</span><h3>Create a Setapp account</h3><p>That’s where the Try Free button lands. It takes a minute.</p></li>
+    <li class="reveal"><span class="setapp-num">2</span><h3>Install Setapp on your Mac</h3><p>One small app that installs and updates everything else.</p></li>
+    <li class="reveal"><span class="setapp-num">3</span><h3>Open KeyComposer</h3><p>It’s in your Setapp library, with the AI credits already covered.</p></li>
+  </ol>
+  <p class="setapp-foot reveal">Already on Setapp? Search for KeyComposer in the Setapp app, or open <a href={APP_PAGE_URL} target="_blank" rel="noopener">its Setapp page</a>. <a href="https://setapp.com" target="_blank" rel="noopener">More about Setapp</a>.</p>
+</section>
+
 <!-- ─────────────────────────────  FAQ  ──── -->
 <section class="section band" id="faq">
   <div class="faq-wrap">
@@ -471,7 +489,7 @@ const appJsonLd = {
     </div>
     <h2>Your next deck is<br /><span class="grad">one sentence away</span></h2>
     <a class="btn" href={TRY_URL}>Try Free <Fragment set:html={arrow} /></a>
-    <p class="closing-meta">No API keys <span>•</span> Any language <span>•</span> Keynote, PowerPoint, PDF</p>
+    <p class="closing-meta">Sign up with a Setapp account <span>•</span> No API keys <span>•</span> Keynote, PowerPoint, PDF</p>
   </div>
 </section>
 

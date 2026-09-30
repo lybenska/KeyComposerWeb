@@ -227,7 +227,7 @@ p { margin: 0; text-wrap: pretty; }
 }
 .nav-links a { color: var(--gray-500); transition: color .15s; }
 .nav-links a:hover, .nav-links a.is-active { color: var(--ink); }
-.nav-menu-cta, .nav-burger, .nav-backdrop { display: none; }
+.nav-menu-cta, .nav-menu-note, .nav-burger, .nav-backdrop { display: none; }
 
 /* Hidden while the hero CTA is on screen: one Try Free on the first screen. */
 .nav-cta {
@@ -285,6 +285,10 @@ p { margin: 0; text-wrap: pretty; }
   color: var(--white);
 }
 .ck svg { width: 11px; height: 11px; }
+
+.cta-note { margin-top: 14px; font-size: 14px; color: var(--gray-500); }
+.cta-note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); }
+.cta-note a:hover { color: var(--pink); }
 
 /* ── Hero stage (animated demo) ──────────────────────────── */
 .stage {
@@ -798,6 +802,25 @@ p { margin: 0; text-wrap: pretty; }
 .calc-unit { display: block; margin-top: 6px; font-size: 15px; color: var(--gray-500); }
 .calc-note { margin-top: 16px; font-size: 13px; color: var(--gray-400); }
 
+/* ── Setapp explainer ────────────────────────────────────── */
+.setapp-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.setapp-steps li { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--paper); }
+.setapp-num {
+  display: grid; place-items: center;
+  width: 32px; height: 32px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 600;
+}
+.setapp-steps h3 { font-size: 19px; font-weight: 500; }
+.setapp-steps p { margin-top: 6px; font-size: 15px; color: var(--gray-500); }
+.setapp-foot { margin-top: 24px; font-size: 15px; color: var(--gray-500); }
+.setapp-foot a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); }
+.setapp-foot a:hover { color: var(--pink); }
+
 /* ── FAQ ─────────────────────────────────────────────────── */
 .faq-wrap { display: grid; grid-template-columns: 1fr 1.5fr; gap: 64px; }
 .faq-list { border-top: 1px solid var(--line); }
@@ -984,6 +1007,7 @@ footer { padding: 32px 0 48px; font-size: 14px; color: var(--gray-500); }
   .nav-links a:not(.nav-menu-cta) { display: block; padding: 16px 0; border-bottom: 1px solid var(--line); color: var(--ink); }
   .nav-links a.is-active:not(.nav-menu-cta) { color: var(--pink); }
   .nav-menu-cta { display: inline-flex; align-self: flex-start; margin-top: 20px; }
+  .nav-menu-note { display: block; margin-top: 10px; font-size: 13px; color: var(--gray-500); }
   .nav-backdrop {
     position: fixed;
     inset: var(--nav-h) 0 0 0;
@@ -1010,6 +1034,8 @@ footer { padding: 32px 0 48px; font-size: 14px; color: var(--gray-500); }
   .hero-sub { margin-left: auto; margin-right: auto; }
   .checks { justify-items: start; }
   .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .setapp-steps { grid-template-columns: 1fr; }
+  .setapp-foot { text-align: center; }
   .compare-section, .credits, .faq-wrap { grid-template-columns: 1fr; gap: 32px; }
   .how { grid-template-columns: 1fr; gap: 28px; }
   .how-media { position: static; height: auto; display: block; }

@@ -18,7 +18,7 @@
   var utm = [];
   query.forEach(function (v, k) { if (/^utm_/i.test(k)) utm.push([k, v]); });
   if (utm.length) {
-    document.querySelectorAll('a[href^="https://setapp.com"]').forEach(function (a) {
+    document.querySelectorAll('a[href*=".setapp.com"], a[href*="//setapp.com"]').forEach(function (a) {
       var u = new URL(a.href);
       utm.forEach(function (kv) { u.searchParams.set(kv[0], kv[1]); });
       a.href = u.toString();
