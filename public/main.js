@@ -164,34 +164,6 @@
   }, { threshold: .6 });
   document.querySelectorAll('.stat-n').forEach(function (el) { countObs.observe(el); });
 
-  // ── Credit estimate ─────────────────────────────────────
-  // Illustrative ranges calibrated to the in-app estimate (8 slides ≈ 170–310,
-  // Deep Think ≈ 590–1,100). The app shows the real figure before generating.
-  var slider = document.getElementById('calc-slides');
-  var slidesOut = document.getElementById('calc-slides-out');
-  var out = document.getElementById('calc-out');
-  var deep = document.getElementById('calc-deep');
-  var doc = document.getElementById('calc-doc');
-  var img = document.getElementById('calc-img');
-  var fmt = new Intl.NumberFormat('en-US');
-  var round10 = function (n) { return Math.round(n / 10) * 10; };
-
-  function estimate() {
-    var n = Number(slider.value);
-    var lo = 21 * n + 2, hi = 38 * n + 6;
-    if (deep.checked) { lo += 420; hi += 790; }
-    if (doc.checked) { lo += 60; hi += 330; }
-    if (img.checked) {
-      var slots = Math.min(n, 8, Math.max(3, Math.round(0.4 * n)));
-      lo += 70 * slots; hi += 84 * slots;
-    }
-    slidesOut.textContent = n;
-    slider.style.setProperty('--fill', ((n - 3) / 17 * 100) + '%');
-    out.textContent = '≈ ' + fmt.format(round10(lo)) + '–' + fmt.format(round10(hi));
-  }
-  [slider, deep, doc, img].forEach(function (el) { el.addEventListener('input', estimate); });
-  estimate();
-
   // ── Slide reel lightbox ─────────────────────────────────
   var lb = document.getElementById('lightbox');
   if (lb && typeof lb.showModal === 'function') {

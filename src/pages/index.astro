@@ -71,11 +71,19 @@ const compare = [
   { row: 'Formats', old: 'Rebuild for each app', neu: 'Keynote, PowerPoint, PDF, HTML' },
 ];
 
-const creditPoints = [
-  { title: 'One balance for Setapp', text: 'Uses the Setapp AI credits you already have, shared across your Setapp apps.' },
-  { title: 'Cost shown up front', text: 'An estimate appears under your prompt before you generate.' },
-  { title: 'Pay for what you use', text: 'Deep Think, files, and AI images cost more. Templates and small edits cost less.' },
-  { title: 'A heads-up, not a surprise', text: 'If your balance may not cover a deck, KeyComposer says so before you generate and links to a top-up.' },
+// Free-plan bonus: 5,000 AI credits (per the user, 2026-10-07). Say the Setapp account holds the
+// credits; never that they are covered or included beyond this bonus.
+const freePoints = [
+  { lead: '+5,000 AI credits', text: 'on the free plan, for your first decks.' },
+  { lead: 'The cost shows first.', text: 'An estimate appears under your prompt before you generate.' },
+  { lead: 'Your balance', text: 'is always visible next to the prompt.' },
+];
+
+const creditTiles = [
+  { icon: 'balance', title: 'One balance', text: 'for every Setapp app' },
+  { icon: 'estimate', title: 'Shown up front', text: 'an estimate under your prompt' },
+  { icon: 'usage', title: 'Pay for what you use', text: 'small edits cost less' },
+  { icon: 'alert', title: 'A heads-up', text: 'if a deck may not fit your balance' },
 ];
 
 // The eight slides KeyComposer generated for the starter prompt "Seed round pitch for an AI notes
@@ -408,35 +416,40 @@ const appJsonLd = {
 
 <!-- ─────────────────────────────  CREDITS  ──── -->
 <section class="section band" id="credits">
-  <div class="credits">
-    <div class="credits-copy">
-      <div class="reveal">
-        <h2>How <span class="grad">credits</span> work</h2>
+  <div class="split-head stack reveal">
+    <h2>Free to start, with <span class="grad">5,000 credits</span></h2>
+    <ul class="free-meta">{['macOS 15 Sequoia or later', 'Apple silicon', 'Internet for AI generation', 'Keynote, PowerPoint, PDF, HTML'].map((m) => <li>{m}</li>)}</ul>
+  </div>
+  <div class="free-grid">
+    <div class="free-card reveal">
+      <div class="free-app">
+        <img src="/assets/icon.png" width="64" height="64" alt="" />
+        <div><p class="free-name">KeyComposer</p><p class="free-by">by MacPaw · on Setapp</p></div>
       </div>
-      <ul class="credit-points">
-        {creditPoints.map((c) => (
-          <li class="reveal"><h3>{c.title}</h3><p>{c.text}</p></li>
+      <h3>Free to install, with 5,000 AI credits to start.</h3>
+      <ul class="free-points">
+        {freePoints.map((f) => (
+          <li><span class="ck"><Fragment set:html={check} /></span><span><strong>{f.lead}</strong> {f.text}</span></li>
+        ))}
+      </ul>
+      <div class="free-cta">
+        <a class="btn btn-light" href={TRY_URL}>Try Free <Fragment set:html={arrow} /></a>
+        <p>Free to install.<br />Runs through Setapp.<br />5,000 AI credits to start.</p>
+      </div>
+    </div>
+    <div class="credit-card reveal">
+      <span class="credit-badge"><Fragment set:html={bolt} /></span>
+      <h3>Runs on Setapp AI credits</h3>
+      <p class="credit-lede">Each deck, edit, and AI image uses credits from your Setapp account. Deep Think, files, and AI images cost more.</p>
+      <ul class="credit-tiles">
+        {creditTiles.map((t) => (
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[t.icon]} />
+            <strong>{t.title}</strong><span>{t.text}</span>
+          </li>
         ))}
       </ul>
     </div>
-
-    <form class="calc reveal" id="calc" onsubmit="return false" aria-label="Credit estimate">
-      <p class="calc-title">What will my deck cost?</p>
-      <label class="calc-slider">
-        <span class="calc-row"><span>Slides</span><output id="calc-slides-out">8</output></span>
-        <input type="range" id="calc-slides" min="3" max="20" value="8" />
-      </label>
-      <div class="calc-toggles">
-        <label class="tg"><input type="checkbox" id="calc-deep" /><span class="tg-ui"></span>Deep Think</label>
-        <label class="tg"><input type="checkbox" id="calc-doc" /><span class="tg-ui"></span>Attach a document</label>
-        <label class="tg"><input type="checkbox" id="calc-img" /><span class="tg-ui"></span>AI-generated images</label>
-      </div>
-      <div class="calc-result">
-        <span class="calc-num"><Fragment set:html={bolt} /><output id="calc-out">≈ 170–310</output></span>
-        <span class="calc-unit">credits for this presentation</span>
-      </div>
-      <p class="calc-note">Illustrative. KeyComposer shows the exact estimate before you generate. Edits by request start at about 40 credits.</p>
-    </form>
   </div>
 </section>
 
