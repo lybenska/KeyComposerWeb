@@ -145,21 +145,24 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   .rails { position: fixed; inset: 0; z-index: 40; pointer-events: none; display: grid; grid-template-columns: repeat(var(--cols), 1fr); padding: 0 var(--gutter); }
   .rails i { border-left: 1px solid rgba(245,240,247,.06); transform-origin: top; animation: rail 1.4s var(--ease) both; }
   body.on-light .rails i { border-color: rgba(28,21,32,.07); }
-  .logo { transition: color .3s; }
-  body.on-light .logo { color: #1C1520; }
   .rails i:last-child { border-right: 1px solid rgba(245,240,247,.06); }
   .rails i:nth-child(2) { animation-delay: .06s } .rails i:nth-child(3) { animation-delay: .12s } .rails i:nth-child(4) { animation-delay: .18s } .rails i:nth-child(5) { animation-delay: .24s } .rails i:nth-child(6) { animation-delay: .3s }
   @keyframes rail { from { transform: scaleY(0); } }
 
   /* ── Top bar ── */
-  .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 20px var(--gutter); color: #fff; }
-  .logo { display: flex; align-items: center; gap: 10px; font: 700 15px/1 var(--display); letter-spacing: -.02em; text-transform: uppercase; }
-  .logo img { width: 26px; height: 26px; }
-  .burger { width: 34px; height: 34px; background: linear-gradient(135deg, var(--pink), var(--pink-2)); border: 0; cursor: pointer; display: grid; place-content: center; gap: 4px; mix-blend-mode: normal; }
-  .burger span { width: 14px; height: 2px; background: #fff; transition: transform .3s var(--ease); }
-  .bar-wrap { position: fixed; top: 20px; right: var(--gutter); z-index: 61; }
-  body.menu-open .burger span:first-child { transform: translateY(3px) rotate(45deg); }
-  body.menu-open .burger span:last-child { transform: translateY(-3px) rotate(-45deg); }
+  .bar { position: fixed; z-index: 61; top: 12px; left: var(--gutter); right: var(--gutter); height: 58px; display: flex; align-items: center; gap: 8px; padding: 0 8px 0 14px; border-radius: 999px; color: #F5F0F7;
+    background: rgba(28,21,32,.72); -webkit-backdrop-filter: blur(18px) saturate(1.5); backdrop-filter: blur(18px) saturate(1.5);
+    box-shadow: inset 0 0 0 1px rgba(245,240,247,.1), inset 0 1px 0 rgba(245,240,247,.12), 0 12px 40px -12px rgba(0,0,0,.45); }
+  .logo { display: flex; align-items: center; gap: 10px; margin-right: auto; font: 600 17px/1 var(--display); letter-spacing: -.01em; }
+  .logo img { width: 28px; height: 28px; }
+  .bar-links { display: flex; gap: 4px; }
+  .bar-links a { padding: 9px 14px; border-radius: 999px; font: 500 14px/1 var(--text); color: #E2D8E6; transition: background .2s, color .2s; }
+  .bar-links a:hover { background: rgba(245,240,247,.08); color: #fff; }
+  .burger { display: none; width: 42px; height: 42px; border-radius: 50%; border: 0; cursor: pointer; place-content: center; gap: 5px; background: rgba(245,240,247,.1); box-shadow: inset 0 0 0 1px rgba(245,240,247,.12); }
+  .burger span { width: 16px; height: 2px; border-radius: 2px; background: #fff; transition: transform .3s var(--ease); }
+  .burger:hover { background: rgba(245,240,247,.16); }
+  body.menu-open .burger span:first-child { transform: translateY(3.5px) rotate(45deg); }
+  body.menu-open .burger span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
 
   .menu { position: fixed; inset: 0; z-index: 60; background: radial-gradient(ellipse at 15% 10%, rgba(226,63,224,.35), transparent 55%), radial-gradient(ellipse at 90% 90%, rgba(123,115,220,.35), transparent 55%), var(--indigo); color: #fff; padding: 90px var(--gutter) 30px; display: grid; grid-template-rows: 1fr auto; clip-path: inset(0 0 100% 0); transition: clip-path .7s var(--ease); }
   body.menu-open .menu { clip-path: inset(0); }
@@ -201,9 +204,17 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   .hero-foot { grid-column: 1 / -1; grid-row: 2; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
   .hero-title { font-size: clamp(44px, 7vw, 108px); }
   .hero-sub { max-width: 400px; margin-top: 14px; color: var(--soft); font-size: 14px; }
-  .cta { box-shadow: 0 10px 30px -8px rgba(196,31,198,.6); display: inline-flex; align-items: center; gap: 14px; background: linear-gradient(95deg, var(--pink), var(--pink-2)); color: #fff; padding: 18px 22px; font: 700 15px/1 var(--display); text-transform: uppercase; letter-spacing: .02em; white-space: nowrap; transition: background .25s, gap .25s var(--ease); }
-  .cta svg { width: 18px; height: 18px; }
-  .cta:hover { background: var(--white); color: var(--black); gap: 22px; }
+  /* App-style capsule: the composer's Next / Create button, pink to violet with a glass highlight. */
+  .btn, .cta { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 999px; padding: 15px 24px 15px 26px; white-space: nowrap; color: #fff;
+    font: 600 17px/1 var(--text); letter-spacing: -.005em; text-transform: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,0) 55%), linear-gradient(100deg, var(--pink), var(--pink-2));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 0 0 1px rgba(255,255,255,.12), 0 10px 28px -8px rgba(196,31,198,.65);
+    transition: transform .2s var(--ease), box-shadow .2s, filter .2s; }
+  .btn svg, .cta svg { width: 18px; height: 18px; transition: transform .25s var(--ease); }
+  .btn:hover, .cta:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 0 0 1px rgba(255,255,255,.16), 0 16px 34px -10px rgba(196,31,198,.75); }
+  .btn:hover svg, .cta:hover svg { transform: translateX(3px); }
+  .btn:active, .cta:active { transform: translateY(0) scale(.98); }
+  .btn-sm { padding: 11px 18px; font-size: 15px; box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 0 0 1px rgba(255,255,255,.12), 0 6px 18px -6px rgba(196,31,198,.6); }
   .cta-wrap { text-align: right; }
   .cta-wrap .cap { margin-top: 10px; color: var(--soft); }
 
@@ -260,8 +271,9 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   .p-copy p:not(.on) { opacity: 0; transform: translateY(14px); }
   .p-count { position: absolute; right: var(--gutter); bottom: 30px; display: flex; align-items: center; gap: 10px; font: 700 26px/1 var(--display); padding-right: 4px; }
   .p-count i { width: 12px; height: 12px; background: var(--pink); }
-  .p-skip { position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%); background: var(--pink); color: #fff; font: 700 12px/1 var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 10px 14px; }
-  .p-label { position: absolute; left: calc(var(--gutter) + 4px); top: 90px; }
+  .p-skip { position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%); padding: 9px 16px; border-radius: 999px; color: #fff; font: 600 13px/1 var(--text); background: rgba(245,240,247,.1); box-shadow: inset 0 0 0 1px rgba(245,240,247,.14); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  .p-skip:hover { background: rgba(245,240,247,.18); }
+  .p-label { position: absolute; left: calc(var(--gutter) + 4px); top: 92px; }
   .p-bar { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 0; height: 2px; background: var(--line); }
   .p-bar i { display: block; height: 100%; width: calc(var(--prog, 0) * 100%); background: var(--pink); }
 
@@ -284,13 +296,22 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   .cr-head { display: grid; grid-template-columns: repeat(var(--cols), 1fr); align-items: end; }
   .cr-head h2 { grid-column: 1 / 4; padding-left: 4px; font-size: clamp(40px, 6vw, 96px); }
   .cr-head p { grid-column: 5 / 7; padding: 0 4px 6px 16px; max-width: 380px; color: var(--soft); font-size: 17px; line-height: 1.4; }
-  .cr-cards { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 7vh; }
+  .cr-hero { position: relative; overflow: hidden; isolation: isolate; margin-top: 7vh; border-radius: 28px; padding: clamp(36px, 5vw, 72px) clamp(24px, 4vw, 64px); display: grid; grid-template-columns: 1.5fr 1fr; align-items: center; gap: 32px; color: #F5F0F7; background: #1A1420; box-shadow: 0 40px 80px -40px rgba(47,38,81,.6); }
+  .cr-glow { position: absolute; inset: -40%; z-index: -1; background: conic-gradient(from 0deg at 35% 50%, rgba(255,138,246,.0), rgba(255,138,246,.38), rgba(179,164,255,.32), rgba(196,31,198,.0) 60%, rgba(255,138,246,.0)); filter: blur(60px); animation: crspin 14s linear infinite; }
+  @keyframes crspin { to { transform: rotate(1turn); } }
+  .cr-num-wrap { position: relative; }
+  .cr-bolt { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; margin-bottom: 18px; color: #FF8AF6; background: rgba(245,240,247,.08); box-shadow: inset 0 0 0 1px rgba(245,240,247,.14), 0 0 30px rgba(255,138,246,.35); }
+  .cr-bolt svg { width: 24px; height: 24px; }
+  .cr-hero .cr-num { margin: 0; max-width: none; display: flex; align-items: flex-start; font-size: clamp(110px, 15vw, 260px); line-height: .82; letter-spacing: -.05em; font-variant-numeric: tabular-nums;
+    background: linear-gradient(100deg, #FFFFFF 0%, #FF8AF6 45%, #B3A4FF 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 40px rgba(255,138,246,.35)); }
+  .cr-plus { font-size: .45em; margin: .08em .04em 0 0; }
+  .cr-hero .cr-unit { margin: 18px 0 0; font: 700 14px var(--display); letter-spacing: .16em; text-transform: uppercase; color: #E2D8E6; }
+  .cr-hero-copy h3 { margin-top: 16px; font-size: clamp(28px, 2.8vw, 44px); }
+  .cr-hero-copy p { margin-top: 12px; color: #CDBFD3; font-size: 16px; max-width: 380px; }
+  .cr-cards { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
   .cr-card { display: flex; flex-direction: column; padding: 0 0 4px; }
   .cr-vis { height: 190px; border-radius: 18px; display: grid; place-items: center; padding: 20px; margin-bottom: 26px; background: radial-gradient(ellipse at 30% 0%, rgba(226,63,224,.2), transparent 65%), radial-gradient(ellipse at 90% 100%, rgba(123,115,220,.22), transparent 60%), #1D1922; }
   .cr-vis img { width: min(100%, 330px); height: auto; -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 62%, transparent 100%); }
-  .cr-card .cr-big { margin: 0; max-width: none; text-align: center; color: var(--white); font-size: clamp(64px, 6.4vw, 104px); line-height: .9; }
-  .cr-big small { display: block; margin-top: 12px; font: 700 13px var(--display); letter-spacing: .14em; color: #CDBFD3; }
-  .cr-big .pk { background: linear-gradient(95deg, #FF8AF6 0%, #E08CFF 50%, #B3A4FF 100%); -webkit-background-clip: text; background-clip: text; }
   .cr-scale { width: 100%; max-width: 340px; }
   .cr-bar { height: 14px; border-radius: 99px; background: rgba(245,240,247,.1); overflow: hidden; }
   .cr-bar i { display: block; height: 100%; width: 100%; border-radius: 99px; background: linear-gradient(90deg, rgba(255,138,246,.25), #FF8AF6 55%, #B3A4FF); }
@@ -386,7 +407,12 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
     .go-kicker p:first-of-type { margin-top: 16px; }
     .cr-head h2, .cr-head p { grid-column: 1 / -1; padding: 0 4px; }
     .cr-head p { margin-top: 16px; }
-    .cr-cards { grid-template-columns: 1fr; gap: 44px; }
+    .cr-cards { grid-template-columns: 1fr; gap: 44px; margin-top: 40px; }
+    .cr-hero { grid-template-columns: 1fr; border-radius: 22px; }
+    .cr-hero .cr-num { font-size: clamp(80px, 23vw, 150px); }
+    .bar-links { display: none; }
+    .burger { display: grid; }
+    .bar { height: 54px; top: 10px; }
     .sa-head h2, .sa-head p { grid-column: 1 / -1; padding: 0 4px; }
     .sa-head p { margin-top: 16px; }
     .sa-steps { grid-template-columns: 1fr; gap: 9vh; }
@@ -404,10 +430,15 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
 
 <div class="rails" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
+<!-- A floating glass bar, like the app's toolbar: always dark, so it reads over light and dark bands alike. -->
 <header class="bar">
-  <a class="logo" href="#top"><img src={`${A}assets/icon.png`} alt="" width="26" height="26" />KeyComposer</a>
+  <a class="logo" href="#top"><img src={`${A}assets/icon.png`} alt="" width="28" height="28" />KeyComposer</a>
+  <nav class="bar-links" aria-label="Sections">
+    <a href="#deck">Real output</a><a href="#process">How it works</a><a href="#credits">Credits</a><a href="#setapp">Setapp</a>
+  </nav>
+  <a class="btn btn-sm bar-cta" href={TRY_URL}>Try Free</a>
+  <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
 </header>
-<div class="bar-wrap"><button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button></div>
 
 <nav class="menu" id="menu" aria-label="Page sections" inert>
   <ol>
@@ -504,7 +535,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
       {chapters.map((c, i) => <div class="p-shot" data-i={i} style={`--off:${i};--abs:${Math.min(i, 2)}`}><img src={`${A}${c.src}`} alt={c.alt} width="2000" height="1286" loading="lazy" /></div>)}
     </div>
     <div class="p-copy">{chapters.map((c, i) => <p class={i === 0 ? 'on' : ''} data-i={i}>{c.text}</p>)}</div>
-    <a class="p-skip" href="#prompts">Skip ››</a>
+    <a class="p-skip" href="#prompts">Skip ›</a>
     <div class="p-count"><i></i><span id="p-n">1</span>/{chapters.length}</div>
     <div class="p-bar"><i></i></div>
   </div>
@@ -532,21 +563,35 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
     <p>KeyComposer runs on AI credits from your Setapp account. The free plan starts you with 5,000.</p>
   </div>
 
+  <!-- Step 1 gets the stage: the number counts up when the band scrolls in. -->
+  <div class="cr-hero in">
+    <div class="cr-glow" aria-hidden="true"></div>
+    <div class="cr-num-wrap">
+      <span class="cr-bolt" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span>
+      <p class="cr-num up" aria-label="5,000 AI credits"><span class="cr-plus" aria-hidden="true">+</span><span id="cr-count" aria-hidden="true">5,000</span></p>
+      <p class="cr-unit">AI credits on the free plan</p>
+    </div>
+    <div class="cr-hero-copy">
+      <span class="cr-i">1</span>
+      <h3 class="up">{creditCards[0].title}</h3>
+      <p>{creditCards[0].text}</p>
+    </div>
+  </div>
+
   <ol class="cr-cards">
-    {creditCards.map((c, i) => (
-      <li class="cr-card in" style={`transition-delay:${i * 100}ms`}>
-        <div class="cr-vis" aria-hidden={i === 1 ? undefined : 'true'}>
-          {i === 0 && <p class="cr-big up"><span class="pk">+5,000</span><small>AI credits</small></p>}
-          {i === 1 && <img src={`${A}assets/shots/flow/credits-estimate.webp`} alt="In the app: about 960 to 1,100 credits, shown next to the Next button" width="420" height="140" loading="lazy" />}
-          {i === 2 && (
-            <div class="cr-scale">
+    {creditCards.slice(1).map((c, j) => (
+      <li class="cr-card in" style={`transition-delay:${j * 100}ms`}>
+        <div class="cr-vis">
+          {j === 0 && <img src={`${A}assets/shots/flow/credits-estimate.webp`} alt="In the app: about 960 to 1,100 credits, shown next to the Next button" width="420" height="140" loading="lazy" />}
+          {j === 1 && (
+            <div class="cr-scale" aria-hidden="true">
               <div class="cr-bar"><i></i></div>
               <div class="cr-ends"><span>Small edit</span><span>Research · files · Best quality</span></div>
               <div class="cr-ends cr-sub"><span>fewer credits</span><span>more credits</span></div>
             </div>
           )}
         </div>
-        <span class="cr-i">{i + 1}</span>
+        <span class="cr-i">{j + 2}</span>
         <h3 class="up">{c.title}</h3>
         <p>{c.text}</p>
       </li>
@@ -633,6 +678,23 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   // Hero counters roll right after the intro; the rest wait until they scroll into view.
   setTimeout(() => document.querySelectorAll('.hero [data-roll]').forEach(roll), 900);
   document.querySelectorAll('[data-roll]:not(.hero *), .in').forEach((el) => io.observe(el));
+
+  // The free-plan number counts up from 0 the first time its band scrolls in.
+  const count = document.getElementById('cr-count');
+  if (count && !reduce) {
+    count.textContent = '0';
+    new IntersectionObserver((es, o) => {
+      if (!es[0].isIntersecting) return;
+      o.disconnect();
+      const t0 = performance.now(), dur = 1800;
+      const tick = (t) => {
+        const k = Math.min(1, (t - t0) / dur), v = Math.round(5000 * (1 - Math.pow(1 - k, 3)));
+        count.textContent = v.toLocaleString('en-US');
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: .4 }).observe(count);
+  }
 
   // Hero background drifts with the pointer.
   const hero = document.querySelector('.hero');
