@@ -52,19 +52,20 @@ const manifesto = [
   ['the', 1], ['message,', 1], ['not', 1], ['the', 1], ['margins.', 1],
 ];
 
-// The first four rows are real decks made in KeyComposer; hovering them peeks at their slides.
+// Every row is a real deck made in KeyComposer; hovering one peeks at three of its slides.
 // coffee: 2026-10-13 (this page's wall); cat and Halloween: the user's decks from 2026-10-05, cropped from
-// the ad-creative editor captures in creatives/src/img; notd: the seed-pitch starter deck of 2026-09-29.
-// Rows without slides are prompt ideas only, so they get no preview.
+// the ad-creative editor captures in creatives/src/img; notd: the seed-pitch starter deck of 2026-09-29;
+// photosynthesis, Japan, board review and thesis: 2026-10-13 on Optimal, no research. The board review and
+// the thesis were built from fictional demo files (sales.xlsx, thesis.pdf), labelled as demo data.
 const prompts: [string, string, string, string[]][] = [
   ['Team', 'A field guide to office coffee', 'Researched', ['coffee-1', 'coffee-8', 'coffee-4']],
   ['HR, but fun', 'Quarterly performance review: my cat', 'Deadpan', ['cat-1']],
   ['Seasonal', 'Origins of Halloween', '6 slides', ['halloween-1', 'halloween-2', 'halloween-6']],
   ['Startup', 'Seed round pitch for an AI notes app', '8 slides', ['notd-1', 'notd-5', 'notd-7']],
-  ['Business', 'Q3 board review from sales.xlsx', 'From a file', []],
-  ['Teaching', 'Photosynthesis for 7th graders', '10 slides', []],
-  ['Research', 'Turn my thesis.pdf into 12 slides', 'From a file', []],
-  ['Everyday', '10-day Japan itinerary for a family of four', 'Stock photos', []],
+  ['Business', 'Q3 board review from sales.xlsx', 'From a file', ['board-1', 'board-2', 'board-3']],
+  ['Teaching', 'Photosynthesis for 7th graders', '10 slides', ['photosynthesis-1', 'photosynthesis-3', 'photosynthesis-8']],
+  ['Research', 'Turn my thesis.pdf into 12 slides', 'From a PDF', ['thesis-1', 'thesis-5', 'thesis-9']],
+  ['Everyday', '10-day Japan itinerary for a family of four', 'Stock photos', ['japan-1', 'japan-3', 'japan-5']],
 ];
 
 // Credits copy follows index.astro: the free plan adds 5,000 AI credits; the Setapp account holds the
@@ -568,7 +569,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
 <!-- ─────────── PROMPTS ─────────── -->
 <section class="prompts light" id="prompts">
   <h2 class="up in">Pitch decks are<br /><span class="pk">one prompt of many</span></h2>
-  <p class="prompts-lead in">The first four are real decks made in KeyComposer. Hover one to peek at its slides.</p>
+  <p class="prompts-lead in">Every one of these is a real deck made in KeyComposer. Hover a row to peek at its slides.</p>
   <div>
     {prompts.map(([tag, text, meta, slides], i) => (
       <div class={`row in${slides.length ? ' has-peek' : ''}`} data-peek={slides.length ? slides.map((n) => `${A}assets/slides/${n}.webp`).join(' ') : undefined}>
