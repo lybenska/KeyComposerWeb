@@ -14,30 +14,35 @@ const leftStats = [
   { n: '20', suffix: '+', label: 'File types it reads' },
 ];
 
+// The creation flow on develop @ ae0ee800, captured from the app on 2026-10-13 (dark appearance).
 const chapters = [
-  { title: 'Describe it', text: 'Start from a sentence, a starter, or your own PDF, Word, PowerPoint, or Excel file. That’s the whole brief.', src: 'assets/shots/starters-dark.webp', alt: 'Composer with starter decks and a prompt field' },
-  { title: 'Set the brief', text: 'Tone, audience, language, and slide count. Set them yourself, or let AI infer them from the prompt.', src: 'assets/shots/parameters-dark.webp', alt: 'Parameters panel with tone, audience, and length' },
-  { title: 'Pick a look', text: 'Let AI design the theme, choose a preset, or import your brand template. Palette, fonts, and layout carry over.', src: 'assets/shots/styles-dark.webp', alt: 'Style gallery with Auto and built-in presets' },
-  { title: 'Pick a model', text: 'Auto picks the right model for each deck, or choose OpenAI, Claude, Google, Grok, or Llama. No API keys to paste.', src: 'assets/shots/models-dark.webp', alt: 'Model picker listing AI providers' },
-  { title: 'Edit, export', text: 'Click to change anything, or ask in plain words. Export to Keynote, PowerPoint, PDF, or HTML when it’s right.', src: 'assets/shots/editor-dark.webp', alt: 'Deck editor with slide outline, canvas, and inspector' },
+  { title: 'Describe it', text: 'Type a sentence or drop in your files. KeyComposer asks a few quick questions and picks the likely answers for you. Change any, or skip.', src: 'assets/shots/flow/brief.webp', alt: 'Brief with clarifying questions and suggested answers' },
+  { title: 'Set it up', text: 'Research first, slide count, audience, tone, language and style. Choose Economy, Optimal or Best quality, or a specific model.', src: 'assets/shots/flow/setup.webp', alt: 'Setup step with research, audience, tone and AI model options' },
+  { title: 'It researches', text: 'With Research first on, it searches the web before it writes, and shows each search as it goes.', src: 'assets/shots/flow/thinking.webp', alt: 'Deep Thinking drafting the outline while it searches the web' },
+  { title: 'Review the outline', text: 'Edit titles and bullets, ask the AI to change any part, and open every source it used. Nothing is designed until you press Create.', src: 'assets/shots/flow/outline.webp', alt: 'Outline step with editable slides, an AI request field and 15 sources' },
+  { title: 'Edit, export', text: 'Click to change anything, or ask in plain words for one slide or the whole deck. Export to Keynote, PowerPoint, PDF or HTML.', src: 'assets/shots/flow/editor.webp', alt: 'Deck editor with slide list, canvas and an AI request bar' },
 ];
 
-// Real output: the eight slides generated for "Seed round pitch for an AI notes app" (2026-09-29).
+// Real output: the ten slides generated for the brief below on 2026-10-13 (Research first, Best quality),
+// restyled to the brand colours with This-slide requests and touched up by hand in the editor.
+const brief = 'A field guide to office coffee: the species, habitats and rituals of the office coffee drinker. Funny, for my team.';
 const deckSlides = [
-  'Title slide: Notd — your second brain, on autopilot',
-  'The problem: notes get written, then lost',
-  'Why it matters: lost notes are lost hours',
-  'The product: Notd captures and recalls for you',
-  'Traction: early signal is strong',
-  'The market: a large, growing category',
-  'How we make money: freemium to Pro subscription',
-  'The ask: raising $2.5M seed',
+  'Title slide: A Field Guide to Office Coffee',
+  'The habitat: welcome to the office kitchen',
+  'Species one: the Purist',
+  'The Purist: rituals and warning calls',
+  'Species two: the Addict',
+  'The Addict: a day in the life cycle of caffeine',
+  'Species three: the Mug Hoarder',
+  'What science found in the sink',
+  'Shared rituals at the watering hole',
+  'Field notes for peaceful coexistence',
 ];
 // Grid cells (col / row in a 6×3 grid) around the centred app icon, which takes cols 3–4 × rows 1–2.
 const wall = [
   [1, 1], [2, 1], [5, 1], [6, 1],
   [1, 2], [6, 2],
-  [2, 3], [5, 3],
+  [1, 3], [2, 3], [5, 3], [6, 3],
 ];
 
 const manifesto = [
@@ -48,6 +53,7 @@ const manifesto = [
 ];
 
 const prompts = [
+  ['Team', 'A field guide to office coffee', 'Researched'],
   ['Startup', 'Seed round pitch for an AI notes app', '8 slides'],
   ['Business', 'Q3 board review from sales.xlsx', 'From a file'],
   ['Teaching', 'Photosynthesis for 7th graders', '10 slides'],
@@ -55,16 +61,15 @@ const prompts = [
   ['Sales', 'Proposal for a website redesign', 'In Spanish'],
   ['Everyday', '10-day Japan itinerary for a family of four', 'Stock photos'],
   ['Marketing', '2027 content strategy', 'Bold style'],
-  ['Fun', 'Why cats rule the internet', 'Playful'],
 ];
 
 // Credits copy follows index.astro: the free plan adds 5,000 AI credits; the Setapp account holds the
 // credits. Never say they are covered or included, and no prices or "trial".
-// Steps 1 and 2 match the numbered pins on the composer crop (balance chip, estimate line).
+// Steps 1 and 2 match the numbered pins on the two Setup crops (balance in the corner, estimate by Next).
 const creditSteps = [
-  { title: 'Start with 5,000', text: 'The free plan adds 5,000 AI credits to your Setapp account. Your balance sits next to the prompt.' },
-  { title: 'See the cost first', text: 'An estimate appears under your prompt before you generate, with a heads-up if a deck may not fit your balance.' },
-  { title: 'Pay for what you use', text: 'Small edits cost less. Deep Think, files, and AI images cost more. One balance works across Setapp apps.' },
+  { title: 'Start with 5,000', text: 'The free plan adds 5,000 AI credits to your Setapp account. Your balance sits in the window’s top-right corner.' },
+  { title: 'See the cost first', text: 'Every paid step shows its price first: the questions, the outline, and the deck itself, next to the Next button.' },
+  { title: 'Pay for what you use', text: 'Small edits cost less. Research, files, AI images and Best quality cost more. One balance works across Setapp apps.' },
 ];
 
 // Same three images and captions as the Setapp block on index.astro.
@@ -279,13 +284,13 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   .cr-head h2 { grid-column: 1 / 4; padding-left: 4px; font-size: clamp(40px, 6vw, 96px); }
   .cr-head p { grid-column: 5 / 7; padding: 0 4px 6px 16px; max-width: 380px; color: var(--soft); font-size: 17px; line-height: 1.4; }
   .cr-screen { margin-top: 7vh; padding: clamp(28px, 4vw, 56px) clamp(16px, 4vw, 64px); border-radius: 22px; background: radial-gradient(ellipse at 20% 0%, rgba(226,63,224,.18), transparent 60%), radial-gradient(ellipse at 90% 100%, rgba(123,115,220,.22), transparent 60%), var(--plum); box-shadow: 0 30px 60px -30px rgba(47,38,81,.5); }
-  /* A window onto one region of a 2000×1286 capture: --x/--y/--w/--h are pixels in the source image. */
-  .crop { position: relative; overflow: hidden; aspect-ratio: var(--w) / var(--h); }
-  .crop img { position: absolute; max-width: none; width: calc(2000 / var(--w) * 100%); left: calc(var(--x) / var(--w) * -100%); top: calc(var(--y) / var(--h) * -100%); }
-  .crop-box { position: relative; }
-  .crop-wide { max-width: 1100px; margin: 0 auto; }
-  .crop-sm { display: none; }
-  .crop-sm .crop { border-radius: 10px; }
+  .cr-screen { display: flex; justify-content: center; align-items: flex-end; flex-wrap: wrap; gap: 28px clamp(28px, 7vw, 120px); }
+  .cr-shot { position: relative; margin: 0; text-align: center; }
+  .cr-shot img { height: auto; border-radius: 14px; box-shadow: 0 0 0 1px rgba(245,240,247,.08); }
+  .cr-shot:first-child img { width: 282px; }
+  .cr-shot:last-child img { width: 420px; max-width: 100%; }
+  .cr-shot figcaption { margin-top: 14px; color: #CDBFD3; font-size: 13px; }
+  .cr-shot .pin { left: 0; top: 0; }
   .pin { position: absolute; z-index: 2; transform: translate(-50%, -50%); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--pink), var(--pink-2)); color: #fff; font: 700 14px/1 var(--display); box-shadow: 0 0 0 4px rgba(196,31,198,.25); }
   .cr-steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 24px; margin-top: 7vh; }
   .cr-steps li { border-top: 1px solid var(--line); padding: 24px 4px 0; }
@@ -378,9 +383,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
     .go-kicker p:first-of-type { margin-top: 16px; }
     .cr-head h2, .cr-head p { grid-column: 1 / -1; padding: 0 4px; }
     .cr-head p { margin-top: 16px; }
-    .crop-wide { display: none; }
-    .crop-sm { display: block; }
-    .cr-screen { display: grid; gap: 14px; padding: 22px 16px; }
+    .cr-screen { padding: 28px 16px; }
     .cr-steps { grid-template-columns: 1fr; gap: 0; }
     .cr-steps li { padding: 22px 4px 26px; }
     .sa-head h2, .sa-head p { grid-column: 1 / -1; padding: 0 4px; }
@@ -419,7 +422,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
 
 <!-- ─────────── HERO ─────────── -->
 <section class="hero" id="top">
-  <div class="hero-bg" aria-hidden="true"><img src={`${A}assets/shots/starters-dark.webp`} alt="" width="2000" height="1286" fetchpriority="high" /></div>
+  <div class="hero-bg" aria-hidden="true"><img src={`${A}assets/shots/flow/brief.webp`} alt="" width="2000" height="1343" fetchpriority="high" /></div>
 
   <div class="hero-left fade-in" style="--d:1.1s">
     {leftStats.map((s) => (
@@ -430,13 +433,13 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
     ))}
   </div>
 
-  <div class="hero-num up" aria-label="2 minutes">
+  <div class="hero-num up" aria-label="3 steps">
     <span class="roll" data-roll aria-hidden="true">
-      <span class="dg"><span class="sz">0</span><span class="col" data-d="0">{[0,1,2,3,4,5,6,7,8,9].map((k) => <span>{k}</span>)}</span></span><span class="dg"><span class="sz">2</span><span class="col" data-d="2">{[0,1,2,3,4,5,6,7,8,9].map((k) => <span>{k}</span>)}</span></span>
+      <span class="dg"><span class="sz">0</span><span class="col" data-d="0">{[0,1,2,3,4,5,6,7,8,9].map((k) => <span>{k}</span>)}</span></span><span class="dg"><span class="sz">3</span><span class="col" data-d="3">{[0,1,2,3,4,5,6,7,8,9].map((k) => <span>{k}</span>)}</span></span>
     </span>
-    <span class="unit">min</span>
+    <span class="unit">steps</span>
   </div>
-  <p class="hero-num-l fade-in" style="--d:1.8s">Prompt to finished deck, typically</p>
+  <p class="hero-num-l fade-in" style="--d:1.8s">Describe · Set up · Review the outline</p>
 
   <div class="hero-right fade-in" style="--d:1.3s">
     <p>One sentence in.<br />A finished deck out.</p>
@@ -464,9 +467,9 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
 
 <!-- ─────────── MANIFESTO ─────────── -->
 <section class="manifesto light" id="manifesto">
-  <img class="floater a" data-speed="-0.18" src={`${A}assets/slides/notd-2.webp`} alt="" width="1600" height="901" loading="lazy" />
-  <img class="floater b" data-speed="0.14" src={`${A}assets/slides/notd-5.webp`} alt="" width="1600" height="901" loading="lazy" />
-  <img class="floater c" data-speed="-0.3" src={`${A}assets/slides/notd-8.webp`} alt="" width="1600" height="901" loading="lazy" />
+  <img class="floater a" data-speed="-0.18" src={`${A}assets/slides/coffee-4.webp`} alt="" width="1600" height="900" loading="lazy" />
+  <img class="floater b" data-speed="0.14" src={`${A}assets/slides/coffee-8.webp`} alt="" width="1600" height="900" loading="lazy" />
+  <img class="floater c" data-speed="-0.3" src={`${A}assets/slides/coffee-2.webp`} alt="" width="1600" height="900" loading="lazy" />
   <p class="up" id="manifesto-text">
     {manifesto.map(([w, hl]) => <><span class={`w${hl ? ' hl' : ''}`}>{w}</span>{' '}</>)}
   </p>
@@ -475,16 +478,16 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
 <!-- ─────────── REAL OUTPUT WALL ─────────── -->
 <section class="light" id="deck">
   <div class="wall-head in">
-    <h2 class="up">Eight slides.<br /><span class="pk">One prompt.</span></h2>
-    <p><b>“Seed round pitch for an AI notes app”</b>Layout, copy, photos, and charts all came from that one line. Real output, not a mockup. Click a slide to open it.</p>
+    <h2 class="up">Ten slides.<br /><span class="pk">One brief.</span></h2>
+    <p><b>“{brief}”</b>It researched the facts, wrote the jokes and found the photos. Real output, not a mockup. Click a slide to open it.</p>
   </div>
   <div class="wall">
     <div class="wall-center"><img id="wall-icon" src={`${A}app-icon/KeyComposer-1024.png`} alt="KeyComposer app icon" width="1024" height="1024" loading="lazy" /></div>
     {deckSlides.map((alt, i) => (
       <div class="wall-cell in" style={`grid-column:${wall[i][0]};grid-row:${wall[i][1]};transition-delay:${(i % 4) * 80}ms`}>
         <button type="button" data-slide={i} aria-label={`Open slide ${i + 1}: ${alt}`}>
-          <img src={`${A}assets/slides/notd-${i + 1}.webp`} alt={alt} width="1600" height="901" loading="lazy" />
-          <span class="n">{String(i + 1).padStart(2, '0')} / 08</span>
+          <img src={`${A}assets/slides/coffee-${i + 1}.webp`} alt={alt} width="1600" height="900" loading="lazy" />
+          <span class="n">{String(i + 1).padStart(2, '0')} / 10</span>
         </button>
       </div>
     ))}
@@ -522,27 +525,24 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
 </section>
 
 <!-- ─────────── CREDITS ─────────── -->
-<!-- The UI strip is a crop of the real composer capture (prompt-dark.webp), not a mockup. -->
+<!-- Both crops come from the real Setup capture (shots/flow/setup.webp), not mockups. -->
 <section class="credits light" id="credits">
   <div class="cr-head in">
     <h2 class="up">How AI credits<br /><span class="pk">work</span></h2>
     <p>KeyComposer runs on AI credits from your Setapp account. The free plan starts you with 5,000.</p>
   </div>
 
-  <div class="cr-screen in" aria-hidden="true">
-    <div class="crop-box crop-wide">
-      <div class="crop" style="--x:300;--y:995;--w:1220;--h:190"><img src={`${A}assets/shots/prompt-dark.webp`} alt="" width="2000" height="1286" loading="lazy" /></div>
-      <span class="pin" style="left:1.2%;top:43%">1</span>
-      <span class="pin" style="left:43.7%;top:81%">2</span>
-    </div>
-    <div class="crop-box crop-sm">
-      <div class="crop" style="--x:305;--y:1062;--w:420;--h:86"><img src={`${A}assets/shots/prompt-dark.webp`} alt="" width="2000" height="1286" loading="lazy" /></div>
-      <span class="pin" style="left:3%;top:18%">1</span>
-    </div>
-    <div class="crop-box crop-sm">
-      <div class="crop" style="--x:815;--y:1138;--w:370;--h:46"><img src={`${A}assets/shots/prompt-dark.webp`} alt="" width="2000" height="1286" loading="lazy" /></div>
-      <span class="pin" style="left:3%;top:30%">2</span>
-    </div>
+  <div class="cr-screen in">
+    <figure class="cr-shot">
+      <span class="pin">1</span>
+      <img src={`${A}assets/shots/flow/credits-balance.webp`} alt="Credit balance in the window corner: 99,971 credits" width="282" height="90" loading="lazy" />
+      <figcaption>Your balance, top right</figcaption>
+    </figure>
+    <figure class="cr-shot">
+      <span class="pin">2</span>
+      <img src={`${A}assets/shots/flow/credits-estimate.webp`} alt="Estimate next to the Next button: about 960 to 1,100 credits" width="420" height="140" loading="lazy" />
+      <figcaption>The price, before you press Next</figcaption>
+    </figure>
   </div>
 
   <ol class="cr-steps">
@@ -600,7 +600,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
 </main>
 
 <dialog id="lb" aria-label="Slide preview">
-  <img id="lb-img" src={`${A}assets/slides/notd-1.webp`} alt="" width="1600" height="901" />
+  <img id="lb-img" src={`${A}assets/slides/coffee-1.webp`} alt="" width="1600" height="900" />
   <form method="dialog"><span id="lb-cap"></span><span><button type="button" id="lb-prev">Prev</button> · <button type="button" id="lb-next">Next</button> · <button>Close</button></span></form>
 </dialog>
 
@@ -703,7 +703,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   let at = 0;
   const show = (i) => {
     at = (i + slides.length) % slides.length;
-    lbImg.src = `${base}assets/slides/notd-${at + 1}.webp`;
+    lbImg.src = `${base}assets/slides/coffee-${at + 1}.webp`;
     lbImg.alt = slides[at];
     lbCap.textContent = `${at + 1} / ${slides.length} · ${slides[at]}`;
   };
