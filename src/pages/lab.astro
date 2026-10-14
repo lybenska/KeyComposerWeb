@@ -52,20 +52,22 @@ const manifesto = [
   ['the', 1], ['message,', 1], ['not', 1], ['the', 1], ['margins.', 1],
 ];
 
-// Every row is a real deck made in KeyComposer; hovering one peeks at three of its slides.
+// Every row is a real deck made in KeyComposer; hovering one flips through all of its slides.
+// Cat and Halloween only have the slides that survived as ad-creative captures (1 and 3 of 6).
 // coffee: 2026-10-13 (this page's wall); cat and Halloween: the user's decks from 2026-10-05, cropped from
 // the ad-creative editor captures in creatives/src/img; notd: the seed-pitch starter deck of 2026-09-29;
 // photosynthesis, Japan, board review and thesis: 2026-10-13 on Optimal, no research. The board review and
 // the thesis were built from fictional demo files (sales.xlsx, thesis.pdf), labelled as demo data.
+const all = (deck: string, n: number) => Array.from({ length: n }, (_, i) => `${deck}-${i + 1}`);
 const prompts: [string, string, string, string[]][] = [
-  ['Team', 'A field guide to office coffee', 'Researched', ['coffee-1', 'coffee-8', 'coffee-4']],
+  ['Team', 'A field guide to office coffee', 'Researched', all('coffee', 10)],
   ['HR, but fun', 'Quarterly performance review: my cat', 'Deadpan', ['cat-1']],
   ['Seasonal', 'Origins of Halloween', '6 slides', ['halloween-1', 'halloween-2', 'halloween-6']],
-  ['Startup', 'Seed round pitch for an AI notes app', '8 slides', ['notd-1', 'notd-5', 'notd-7']],
-  ['Business', 'Q3 board review from sales.xlsx', 'From a file', ['board-1', 'board-2', 'board-3']],
-  ['Teaching', 'Photosynthesis for 7th graders', '10 slides', ['photosynthesis-1', 'photosynthesis-3', 'photosynthesis-8']],
-  ['Research', 'Turn my thesis.pdf into 12 slides', 'From a PDF', ['thesis-1', 'thesis-5', 'thesis-9']],
-  ['Everyday', '10-day Japan itinerary for a family of four', 'Stock photos', ['japan-1', 'japan-3', 'japan-5']],
+  ['Startup', 'Seed round pitch for an AI notes app', '8 slides', all('notd', 8)],
+  ['Business', 'Q3 board review from sales.xlsx', 'From a file', all('board', 9)],
+  ['Teaching', 'Photosynthesis for 7th graders', '10 slides', all('photosynthesis', 10)],
+  ['Research', 'Turn my thesis.pdf into 12 slides', 'From a PDF', all('thesis', 12)],
+  ['Everyday', '10-day Japan itinerary for a family of four', 'Stock photos', all('japan', 8)],
 ];
 
 // Credits copy follows index.astro: the free plan adds 5,000 AI credits; the Setapp account holds the
@@ -299,6 +301,10 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   .peek img:nth-child(3) { z-index: 1; transform: translate(-42px, -40px) rotate(-9deg) scale(.86); }
   .peek:not(.on) img:nth-child(n+2) { transform: none; }
   .peek img[hidden] { display: none; }
+  .peek img:nth-child(1).flip { animation: peekin .35s var(--ease); }
+  @keyframes peekin { from { transform: translate(-18px, 10px) rotate(-6deg); opacity: .4; } }
+  .peek-n { position: absolute; z-index: 4; right: -10px; bottom: -14px; padding: 6px 10px; border-radius: 999px; color: #fff; font: 600 12px/1 var(--text); background: rgba(28,21,32,.85); box-shadow: inset 0 0 0 1px rgba(245,240,247,.14); }
+  .peek-n:empty { display: none; }
   .has-peek { cursor: zoom-in; }
   @media (hover: none) {
     .peek { display: none; }
@@ -581,7 +587,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
       </div>
     ))}
   </div>
-  <div class="peek" id="peek" aria-hidden="true"><img alt="" /><img alt="" /><img alt="" /></div>
+  <div class="peek" id="peek" aria-hidden="true"><img alt="" /><img alt="" /><img alt="" /><span class="peek-n"></span></div>
 </section>
 
 <!-- ─────────── CREDITS ─────────── -->
@@ -707,11 +713,12 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   setTimeout(() => document.querySelectorAll('.hero [data-roll]').forEach(roll), 900);
   document.querySelectorAll('[data-roll]:not(.hero *), .in').forEach((el) => io.observe(el));
 
-  // Prompt rows with real decks: fan their slides out next to the cursor, easing after it.
+  // Prompt rows with real decks: fan their slides out next to the cursor and flip through the whole deck.
   const peek = document.getElementById('peek');
   if (peek && matchMedia('(hover: hover)').matches) {
     const imgs = [...peek.querySelectorAll('img')];
-    let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+    const counter = peek.querySelector('.peek-n');
+    let tx = 0, ty = 0, x = 0, y = 0, raf = 0, timer = 0, srcs = [], at = 0;
     const follow = () => {
       x += (tx - x) * .18; y += (ty - y) * .18;
       peek.style.setProperty('--px', `${x}px`); peek.style.setProperty('--py', `${y}px`);
@@ -724,15 +731,27 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
       ty = Math.min(Math.max(e.clientY - h / 2, 70), innerHeight - h - 20);
       if (!raf) raf = requestAnimationFrame(follow);
     };
+    // The front card shows slide `at`; the two behind it are the next ones, so the fan reads as a deck.
+    const show = () => {
+      imgs.forEach((im, k) => {
+        const src = k < srcs.length ? srcs[(at + k) % srcs.length] : '';
+        im.hidden = !src; if (src && im.getAttribute('src') !== src) im.src = src;
+      });
+      imgs[0].classList.remove('flip'); void imgs[0].offsetWidth; imgs[0].classList.add('flip');
+      counter.textContent = srcs.length > 1 ? `${at + 1} / ${srcs.length}` : '';
+    };
     document.querySelectorAll('.has-peek').forEach((row) => {
-      const srcs = row.dataset.peek.split(' ');
+      const list = row.dataset.peek.split(' ');
       row.addEventListener('mouseenter', (e) => {
-        imgs.forEach((im, k) => { im.hidden = !srcs[k]; if (srcs[k]) im.src = srcs[k]; });
-        aim(e); x = tx; y = ty; follow();
+        srcs = list; at = 0;
+        list.forEach((src) => { const im = new Image(); im.src = src; });
+        show(); aim(e); x = tx; y = ty; follow();
         peek.classList.add('on');
+        clearInterval(timer);
+        if (list.length > 1 && !reduce) timer = setInterval(() => { at = (at + 1) % srcs.length; show(); }, 1100);
       });
       row.addEventListener('mousemove', aim);
-      row.addEventListener('mouseleave', () => peek.classList.remove('on'));
+      row.addEventListener('mouseleave', () => { peek.classList.remove('on'); clearInterval(timer); });
     });
   }
 
