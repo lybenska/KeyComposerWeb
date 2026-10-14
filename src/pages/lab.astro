@@ -339,7 +339,8 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   .cr-cards { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
   .cr-card { display: flex; flex-direction: column; padding: 0 0 4px; }
   .cr-vis { height: 190px; border-radius: 18px; display: grid; place-items: center; padding: 20px; margin-bottom: 26px; background: radial-gradient(ellipse at 30% 0%, rgba(226,63,224,.2), transparent 65%), radial-gradient(ellipse at 90% 100%, rgba(123,115,220,.22), transparent 60%), #1D1922; }
-  .cr-vis img { width: min(100%, 330px); height: auto; -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 62%, transparent 100%); }
+  /* The crop is cut to the capsule's own shape (transparent corners), so it sits on the panel cleanly. */
+  .cr-vis img { width: min(100%, 300px); height: auto; filter: drop-shadow(0 12px 24px rgba(0,0,0,.45)); }
   .cr-scale { width: 100%; max-width: 340px; }
   .cr-bar { height: 14px; border-radius: 99px; background: rgba(245,240,247,.1); overflow: hidden; }
   .cr-bar i { display: block; height: 100%; width: 100%; border-radius: 99px; background: linear-gradient(90deg, rgba(255,138,246,.25), #FF8AF6 55%, #B3A4FF); }
@@ -380,7 +381,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   .go-kicker p + p { margin-top: 10px; }
   .go-kicker .links { margin-top: 16px; display: flex; gap: 18px; font-weight: 600; }
   .go-kicker .links a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(245,240,247,.3); }
-  .go-big { display: block; font-size: clamp(80px, 19vw, 360px); line-height: .82; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; margin-left: -.03em; }
+  .go-big { display: block; max-width: 100%; font-size: clamp(40px, 16vw, 330px); line-height: .82; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; margin-left: -.03em; }
   .go-big svg { color: #B3A4FF; }
   .go-big svg { display: inline-block; width: .5em; height: .5em; vertical-align: .08em; transition: transform .4s var(--ease); }
   .go-big:hover svg { transform: translateX(.12em); }
@@ -613,7 +614,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
     {creditCards.slice(1).map((c, j) => (
       <li class="cr-card in" style={`transition-delay:${j * 100}ms`}>
         <div class="cr-vis">
-          {j === 0 && <img src={`${A}assets/shots/flow/credits-estimate.webp`} alt="In the app: about 960 to 1,100 credits, shown next to the Next button" width="420" height="140" loading="lazy" />}
+          {j === 0 && <img src={`${A}assets/shots/flow/credits-estimate.webp`} alt="In the app: about 960 to 1,100 credits, shown next to the Next button" width="402" height="123" loading="lazy" />}
           {j === 1 && (
             <div class="cr-scale" aria-hidden="true">
               <div class="cr-bar"><i></i></div>
