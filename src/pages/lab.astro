@@ -289,8 +289,6 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   .prompts { padding: 16vh var(--gutter) 12vh; }
   .prompts h2 { font-size: clamp(40px, 6vw, 96px); padding-left: 4px; }
   .prompts-lead { margin: 18px 0 6vh; padding-left: 4px; color: var(--mute); font-size: 15px; }
-  .r-eye { color: #B01CB3; }
-  .row:hover .r-eye { color: #FF8AF6; }
   .r-thumb { display: none; }
   /* The peek: up to three real slides fanned out next to the cursor (pointer devices only). */
   .peek { position: fixed; left: 0; top: 0; z-index: 45; width: 340px; height: 200px; pointer-events: none; opacity: 0; transform: translate3d(var(--px, 0), var(--py, 0), 0) scale(.85); transition: opacity .25s ease, scale .3s var(--ease); }
@@ -309,7 +307,6 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
   @media (hover: none) {
     .peek { display: none; }
     .has-peek .r-thumb { display: block; grid-column: 1 / -1; width: min(70%, 320px); margin: 0 0 18px 4px; border-radius: 10px; box-shadow: 0 14px 30px -14px rgba(28,21,32,.45); }
-    .r-eye { display: none; }
   }
   .row { display: grid; grid-template-columns: repeat(var(--cols), 1fr); align-items: center; border-top: 1px solid var(--line); min-height: 84px; position: relative; isolation: isolate; }
   .row:last-child { border-bottom: 1px solid var(--line); }
@@ -582,7 +579,7 @@ const reel = (digits: string) => digits.split('').map((d) => ({ d, isNum: /\d/.t
         <span class="r-num">{String(i + 1).padStart(2, '0')}</span>
         <span class="r-text up">{text}</span>
         <span class="r-tag">{tag}</span>
-        <span class="r-meta">{meta}{slides.length > 0 && <span class="r-eye" aria-hidden="true"> · See slides</span>}</span>
+        <span class="r-meta">{meta}</span>
         {slides.length > 0 && <img class="r-thumb" src={`${A}assets/slides/${slides[0]}.webp`} alt="" width="1280" height="720" loading="lazy" />}
       </div>
     ))}
